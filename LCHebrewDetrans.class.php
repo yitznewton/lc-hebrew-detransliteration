@@ -21,64 +21,64 @@ class LCHebrewDetrans
   
   private $opacCodes = array(
     'alef'        => '{288}',
-  	'bet'         => '{289}',
-  	'gimel'       => '{290}',
-  	'dalet'       => '{291}',
-  	'he'          => '{292}',
-  	'vav'         => '{293}',
-  	'zayin'       => '{294}',
-  	'het'         => '{295}',
-  	'tet'         => '{296}',
-  	'yud'         => '{297}',
-  	'kaf'         => '{299}',
-  	'kaf_sofit'   => '{298}',
-  	'lamed'       => '{300}',
-  	'mem'         => '{302}',
-  	'mem_sofit'   => '{301}',
-  	'nun'         => '{304}',
-  	'nun_sofit'   => '{303}',
-  	'samekh'      => '{305}',
-  	'ayin'        => '{306}',
-  	'pe'          => '{308}',
-  	'pe_sofit'    => '{307}',
-  	'tsadi'       => '{310}',
-  	'tsadi_sofit' => '{309}',
-  	'kuf'         => '{311}',
-  	'resh'        => '{312}',
-  	'shin'        => '{313}',
-  	'sin'         => '{313}',
-  	'tav'         => '{314}'
+    'bet'         => '{289}',
+    'gimel'       => '{290}',
+    'dalet'       => '{291}',
+    'he'          => '{292}',
+    'vav'         => '{293}',
+    'zayin'       => '{294}',
+    'het'         => '{295}',
+    'tet'         => '{296}',
+    'yud'         => '{297}',
+    'kaf'         => '{299}',
+    'kaf_sofit'   => '{298}',
+    'lamed'       => '{300}',
+    'mem'         => '{302}',
+    'mem_sofit'   => '{301}',
+    'nun'         => '{304}',
+    'nun_sofit'   => '{303}',
+    'samekh'      => '{305}',
+    'ayin'        => '{306}',
+    'pe'          => '{308}',
+    'pe_sofit'    => '{307}',
+    'tsadi'       => '{310}',
+    'tsadi_sofit' => '{309}',
+    'kuf'         => '{311}',
+    'resh'        => '{312}',
+    'shin'        => '{313}',
+    'sin'         => '{313}',
+    'tav'         => '{314}'
   );
   
   private $utfCodes = array(
     'alef'        => '&#x5D0;',
-  	'bet'         => '&#x5D1;',
-  	'gimel'       => '&#x5D2;',
-  	'dalet'       => '&#x5D3;',
-  	'he'          => '&#x5D4;',
-  	'vav'         => '&#x5D5;',
-  	'zayin'       => '&#x5D6;',
-  	'het'         => '&#x5D7;',
-  	'tet'         => '&#x5D9;',
-  	'yud'         => '&#x5D9;',
-  	'kaf'         => '&#x5D0;',
+    'bet'         => '&#x5D1;',
+    'gimel'       => '&#x5D2;',
+    'dalet'       => '&#x5D3;',
+    'he'          => '&#x5D4;',
+    'vav'         => '&#x5D5;',
+    'zayin'       => '&#x5D6;',
+    'het'         => '&#x5D7;',
+    'tet'         => '&#x5D9;',
+    'yud'         => '&#x5D9;',
+    'kaf'         => '&#x5D0;',
     'kaf_sofit'   => '&#x5DA;',
-  	'lamed'       => '&#x5DC;',
-  	'mem'         => '&#x5DE;',
-  	'mem_sofit'   => '&#x5DD;',
-  	'nun'         => '&#x5E0;',
-  	'nun_sofit'   => '&#x5DF;',
-  	'samekh'      => '&#x5E1;',
-  	'ayin'        => '&#x5E2;',
-  	'pe'          => '&#x5E4;',
-  	'pe_sofit'    => '&#x5E3;',
-  	'tsadi'       => '&#x5E6;',
-  	'tsadi_sofit' => '&#x5E5;',
-  	'kuf'         => '&#x5E7;',
-  	'resh'        => '&#x5E8;',
-  	'shin'        => '&#x5E9;',
-  	'sin'         => '&#x5E9;',
-  	'tav'         => '&#x5EA;'
+    'lamed'       => '&#x5DC;',
+    'mem'         => '&#x5DE;',
+    'mem_sofit'   => '&#x5DD;',
+    'nun'         => '&#x5E0;',
+    'nun_sofit'   => '&#x5DF;',
+    'samekh'      => '&#x5E1;',
+    'ayin'        => '&#x5E2;',
+    'pe'          => '&#x5E4;',
+    'pe_sofit'    => '&#x5E3;',
+    'tsadi'       => '&#x5E6;',
+    'tsadi_sofit' => '&#x5E5;',
+    'kuf'         => '&#x5E7;',
+    'resh'        => '&#x5E8;',
+    'shin'        => '&#x5E9;',
+    'sin'         => '&#x5E9;',
+    'tav'         => '&#x5EA;'
   );
   
   private $manualWords = array(
@@ -160,10 +160,10 @@ class LCHebrewDetrans
   public function __construct($text = null)
     {
       if ($text !== null) {
-  	  $this->setText($text);
-  	}
-  	
-  	// initialize the array of manual-override word replacements
+      $this->setText($text);
+    }
+    
+    // initialize the array of manual-override word replacements
     $this->generateWordPatterns();
   }
   
@@ -205,14 +205,14 @@ class LCHebrewDetrans
     if (is_array($replacement) === false) {
       $replacement = array($replacement);
     }
-	
-  	$replaceStringOpac = '';
-  	$replaceStringUtf = '';
-  	
-  	foreach ($replacement as $r) {
-  	  $replaceStringOpac .= $this->getOpacCode($r);
-  	  $replaceStringUtf .= $this->getUtfCode($r);
-  	}
+  
+    $replaceStringOpac = '';
+    $replaceStringUtf = '';
+    
+    foreach ($replacement as $r) {
+      $replaceStringOpac .= $this->getOpacCode($r);
+      $replaceStringUtf .= $this->getUtfCode($r);
+    }
   
     $this->opacText = preg_replace($pattern, $replaceStringOpac, $this->opacText);
     $this->utfText = preg_replace($pattern, $replaceStringUtf, $this->utfText);
@@ -220,21 +220,21 @@ class LCHebrewDetrans
   
   private function generateWordPatterns()
   {
-  	$result = array();
+    $result = array();
     
     foreach ($this->manualWords as $word => $letters) {
       // find words in field matching override words, delimited
       // by space|hyphen|subfield delimiter|^|$
       $pattern = '(?<=^|[ -]|$.)' . $word . '(?=[^a-z&\{]|$)';
         
-  	  $opac_letters = '';
-  	  $utf_letters = '';
-  	  foreach ($letters as $l) {
+      $opac_letters = '';
+      $utf_letters = '';
+      foreach ($letters as $l) {
         $opac_letters .= $this->getOpacCode($l);
         $utf_letters .= $this->getUtfCode($l);
-  	  }
-  	  
-  	  $result[] = array($pattern, $opac_letters, $utf_letters);
+      }
+      
+      $result[] = array($pattern, $opac_letters, $utf_letters);
     }
     
     $this->wordPatterns = $result;
@@ -271,7 +271,7 @@ class LCHebrewDetrans
     // wipe 'i' if it's the first vowel after initial consonant
     $this->opacText = preg_replace('~((^|[ -]|\|.)(.{1,2}|\{[^\}]+\}.{1,2}))i(?! |$)~', '$1', $this->opacText);
     $this->utfText = preg_replace('~((^|[ -]|\|.)(.{1,2}|\{[^\}]+\}.{1,2}))i(?! |$)~', '$1', $this->utfText);
-	
+  
     // single letters that are two in transliterated form
     $this->replaceLetters('~(?<=[^\};])kh[a]?(?=[^a-z&\{-]|$)~', 'kaf_sofit');
     $this->replaceLetters('~(?<=[^\};])kh~', 'kaf');
@@ -340,7 +340,7 @@ class LCHebrewDetrans
     // back to lowercase for the subfield delimiters and XML entities which remain
     $this->opacText = strtolower($this->opacText);
     $this->utfText = strtolower($this->utfText);
-	
+  
     return array( $this->opacText, $this->utfText );
   }
 }
