@@ -1,0 +1,51 @@
+Records {
+  font-family: "Arial Unicode MS";
+  font-size: 10pt;
+}
+
+record {
+  display: block;
+  clear: both;
+  border-top: 2px solid black;
+  margin-top: 50px;
+}
+
+id {
+  font-size: 7pt;
+  font-weight: bold;
+}
+
+field {
+  display: block;
+  clear: both;
+  padding: 5px 0;
+  border-top: 1px dashed black;
+}
+
+code {
+  display: block;
+  float: left;
+  margin-right: 0.5em;
+}
+
+content {
+  display: block;
+  float: left;
+}
+
+hebrewCode {
+  display: block;
+  clear: both;
+  margin-right: 0.5em;
+  float: left;
+}
+
+hebrewContentOPAC {
+  display: none;
+}
+
+hebrewContentUTF {
+  display: block;
+  float: left;
+}
+
