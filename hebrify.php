@@ -214,8 +214,7 @@ function getRecords($filename)
 
 function writeXMLproof($filename, $records)
 {
-  $file = ($filename);
-  if (file_exists($file) === true) {
+  if (file_exists($filename) === true) {
     throw new Exception('XML output file already exists');
   }
 
@@ -228,7 +227,7 @@ function writeXMLproof($filename, $records)
   );
   $xmlSer = new XML_Serializer($options);
 
-  $fp = fopen($file, 'wb');
+  $fp = fopen($filename, 'wb');
   fwrite($fp, '<?xml version="1.0" encoding="UTF-8" ?>' . "\n");
   fwrite($fp, '<?xml-stylesheet type="text/css" href="style.css"?>' . "\n");
   fwrite($fp, '<Records>' . "\n");
@@ -252,12 +251,11 @@ function writeXMLproof($filename, $records)
 
 function writeOPACfields($filename, $records)
 {
-  $file = ($filename);
-  if (file_exists($file) === true) {
+  if (file_exists($filename) === true) {
     throw new Exception('OPAC output file already exists');
   }
 
-  $fp = fopen($file, 'wb');
+  $fp = fopen($filename, 'wb');
 
   foreach ($records as $r) {
     $ra = $r->getArray();
