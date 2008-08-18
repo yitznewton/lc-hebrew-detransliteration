@@ -61,7 +61,7 @@ class LCHebrewDetrans
     'het'         => '&#x5D7;',
     'tet'         => '&#x5D8;',
     'yud'         => '&#x5D9;',
-    'kaf'         => '&#x5D0;',
+    'kaf'         => '&#x5DB;',
     'kaf_sofit'   => '&#x5DA;',
     'lamed'       => '&#x5DC;',
     'mem'         => '&#x5DE;',
@@ -86,6 +86,8 @@ class LCHebrewDetrans
       array('bet', 'yud', 'tav'),
     'bayit' =>
       array('bet', 'yud', 'tav'),
+    'da\{DOTB\}vid' =>
+      array('dalet', 'vav', 'dalet'),
     'yerushalayim' =>
       array('yud', 'resh', 'vav', 'shin', 'lamed', 'yud', 'mem_sofit'),
     'yerushala\[y\]im' =>

@@ -187,7 +187,7 @@ function getRecords($filename)
           // if there's a subfield t, discard everything before it and change to 74002$a
           $tag = '740';
           $inds = '02';
-          $content = '$a' . substr($content, strpos($content, '$t') + 2);
+          $content = substr($content, strpos($content, '$t') + 2);
         } else {
           // ignore the line
           continue;
@@ -294,6 +294,6 @@ function writeOPACfields($filename, $records)
   fclose($fp);
 }
 
-$records = getRecords('c:/shared/iii/hebrew-2008aug15.mrk');
+$records = getRecords('./hebrew-2008aug15.mrk');
 writeXMLproof('./results2.xml', $records);
 writeOPACfields('./hebrew_opac2.txt', $records);
