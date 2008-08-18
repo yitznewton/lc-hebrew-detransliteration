@@ -88,7 +88,7 @@ class LCHebrewDetrans
       array('bet', 'yud', 'tav'),
     'yerushalayim' =>
       array('yud', 'resh', 'vav', 'shin', 'lamed', 'yud', 'mem_sofit'),
-    'yerushala[y]im' =>
+    'yerushala\[y\]im' =>
       array('yud', 'resh', 'vav', 'shin', 'lamed', 'mem_sofit'),
     'mosheh' =>
       array('mem', 'shin', 'he'),
@@ -184,31 +184,31 @@ class LCHebrewDetrans
   
   public function getOpacCode($letter)
   {
-    if (array_key_exists($letter, $this->opacCodes)) {
+    if (isset($letter, $this->opacCodes)) {
       return $this->opacCodes[$letter];
     } else {
-      throw new Exception ('Letter not in OPAC comparison table.');
+      throw new Exception ("Letter '$letter' not in OPAC comparison table.");
     }
   }
 
   public function getUtfCode($letter)
   {
-    if (array_key_exists($letter, $this->utfCodes)) {
+    if (isset($letter, $this->utfCodes)) {
       return $this->utfCodes[$letter];
     } else {
-      throw new Exception ('Letter not in UTF comparison table.');
+      throw new Exception ("Letter '$letter' not in UTF comparison table.");
     }
   }
   
   private function replaceLetters($pattern, $replacement)
   {
-    if (is_array($replacement) === false) {
-      $replacement = array($replacement);
-    }
-  
     $replaceStringOpac = '';
     $replaceStringUtf = '';
     
+    if (is_array($replacement) === false) {
+      $replacement = array($replacement);
+    }
+
     foreach ($replacement as $r) {
       $replaceStringOpac .= $this->getOpacCode($r);
       $replaceStringUtf .= $this->getUtfCode($r);
