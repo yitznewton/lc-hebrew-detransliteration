@@ -198,16 +198,29 @@ function getRecords($filename)
         // only subfields 'a' and 'b'
         $startSubB = strpos($content, '$b');
         if ($startSubB !== false) {
-          $content = substr($content, 0, strpos($content, '$', $startSubB + 1)) . "\n";
+          // there is a subfield b
+          $startNextSub = strpos($content, '$', $startSubB + 1);
+          if ($startNextSub !== false) {
+            // if there are subfields after b, truncate
+            $content = substr($content, 0, strpos($content, '$', $startSubB + 1)) . "\n";
+          }
         } else {
-          $content = substr($content, 0, strpos($content, '$'));
+          // any subfields after 'a' are not 'b', so truncate if exist
+          if (strpos($content, '$') !== false) {
+            $content = substr($content, 0, strpos($content, '$'));
+          }
         }
+      }
+      
+      if ($tag == '246' && strpos($content, '$a') !== false) {
+        // knock off subfield i if present
+        $content = trim(substr($content, strpos($content, '$a') + 2));
       }
 
       $r->addField($tag.$inds, $content);
     }
   }
-  $records[] = $r;
+  $records[] = $r;  // push final record
 
   return $records;
 }
