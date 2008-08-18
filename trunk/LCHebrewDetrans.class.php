@@ -59,7 +59,7 @@ class LCHebrewDetrans
     'vav'         => '&#x5D5;',
     'zayin'       => '&#x5D6;',
     'het'         => '&#x5D7;',
-    'tet'         => '&#x5D9;',
+    'tet'         => '&#x5D8;',
     'yud'         => '&#x5D9;',
     'kaf'         => '&#x5D0;',
     'kaf_sofit'   => '&#x5DA;',
