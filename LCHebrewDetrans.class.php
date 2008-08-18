@@ -247,13 +247,12 @@ class LCHebrewDetrans
     
     // make the subfield delimiters and diacritics
     // uppercase to escape Hebrification
-    $text = preg_replace('~ ?\$([a-z]) ?~e', "'|' . strtoupper('$1')", $text);
-    $text = preg_replace('~\{([a-z]+)\}~e', "'{' . strtoupper('$1') . '}'", $text);
+    $text = preg_replace('/ ?\$([a-z]) ?/e', "'|' . strtoupper('$1')", $text);
+    $text = preg_replace('/\{([a-z]+)\}/e', "'{' . strtoupper('$1') . '}'", $text);
     
     // truncate 245$c
     // CHANGED - CHECK TO MAKE SURE IT DOESN'T BREAK!
-    $text = preg_replace('~ /.*$~', '', $text);
-    //$text = preg_replace('~ /(.*) /~', '$1', $text);
+    $text = preg_replace('/ \/.*$/', '', $text);
     
     $this->opacText = $text;
     $this->utfText = $text;
@@ -264,78 +263,78 @@ class LCHebrewDetrans
     
     foreach ($this->wordPatterns as $word) {
       // replace manual override words
-      $this->opacText = preg_replace("~$word[0]~", $word[1], $this->opacText);
-      $this->utfText  = preg_replace("~$word[0]~", $word[2], $this->utfText);
+      $this->opacText = preg_replace("/$word[0]/", $word[1], $this->opacText);
+      $this->utfText  = preg_replace("/$word[0]/", $word[2], $this->utfText);
     }
 
     // wipe 'i' if it's the first vowel after initial consonant
-    $this->opacText = preg_replace('~((^|[ -]|\|.)(.{1,2}|\{[^\}]+\}.{1,2}))i(?! |$)~', '$1', $this->opacText);
-    $this->utfText = preg_replace('~((^|[ -]|\|.)(.{1,2}|\{[^\}]+\}.{1,2}))i(?! |$)~', '$1', $this->utfText);
+    $this->opacText = preg_replace('/((^|[ -]|\|.)(.{1,2}|\{[^\}]+\}.{1,2}))i(?! |$)/', '$1', $this->opacText);
+    $this->utfText = preg_replace('/((^|[ -]|\|.)(.{1,2}|\{[^\}]+\}.{1,2}))i(?! |$)/', '$1', $this->utfText);
   
     // single letters that are two in transliterated form
-    $this->replaceLetters('~(?<=[^\};])kh[a]?(?=[^a-z&\{-]|$)~', 'kaf_sofit');
-    $this->replaceLetters('~(?<=[^\};])kh~', 'kaf');
-    $this->replaceLetters('~sh~', 'shin');
-    $this->replaceLetters('~(?<=[^\};])ts(?=[^a-z&\{-]|$)~', 'tsadi_sofit');
-    $this->replaceLetters('~(?<=[^\};])ts~', 'tsadi');
+    $this->replaceLetters('/(?<=[^\};])kh[a]?(?=[^a-z&\{-]|$)/', 'kaf_sofit');
+    $this->replaceLetters('/(?<=[^\};])kh/', 'kaf');
+    $this->replaceLetters('/sh/', 'shin');
+    $this->replaceLetters('/(?<=[^\};])ts(?=[^a-z&\{-]|$)/', 'tsadi_sofit');
+    $this->replaceLetters('/(?<=[^\};])ts/', 'tsadi');
 
     // alef
-    $this->replaceLetters('~(?<=[^h])a(?=[^a-z&\{-]|$)~', 'alef');
-    $this->replaceLetters('~(?<=^|[ -])[ae][iy]~', array('alef', 'yud'));
-    $this->replaceLetters('~(?<=^|[ -])oi~', array('alef', 'vav', 'yud'));
-    $this->replaceLetters('~(?<=^|[ -])[aei]~', 'alef');
-    $this->replaceLetters('~(?<=^|[ -])[ou]~', 'vav');
-    $this->replaceLetters('~\{MLRHRING\}[ae]~', 'alef');
-    $this->replaceLetters('~\{MLRHRING\}i~', array('alef', 'yud'));
-    $this->replaceLetters('~\{MLRHRING\}[ou]~', array('alef', 'vav'));
+    $this->replaceLetters('/(?<=[^h])a(?=[^a-z&\{-]|$)/', 'alef');
+    $this->replaceLetters('/(?<=^|[ -])[ae][iy]/', array('alef', 'yud'));
+    $this->replaceLetters('/(?<=^|[ -])oi/', array('alef', 'vav', 'yud'));
+    $this->replaceLetters('/(?<=^|[ -])[aei]/', 'alef');
+    $this->replaceLetters('/(?<=^|[ -])[ou]/', 'vav');
+    $this->replaceLetters('/\{MLRHRING\}[ae]/', 'alef');
+    $this->replaceLetters('/\{MLRHRING\}i/', array('alef', 'yud'));
+    $this->replaceLetters('/\{MLRHRING\}[ou]/', array('alef', 'vav'));
 
     // remaining vowels
-    $this->replaceLetters('~(?<=^| )yi~', 'yud');
-    $this->replaceLetters('~e(?=[^-a-z&\{])~', 'yud');
-    $this->replaceLetters('~ei~', array('yud', 'yud'));
-    $this->replaceLetters('~a[iy]~', 'yud');
-    $this->replaceLetters('~oi~', array('vav', 'yud'));
-    $this->replaceLetters('~[ae]~', array() );
-    $this->replaceLetters('~i~', 'yud');
-    $this->replaceLetters('~[ou]~', 'vav');
+    $this->replaceLetters('/(?<=^| )yi/', 'yud');
+    $this->replaceLetters('/e(?=[^-a-z&\{])/', 'yud');
+    $this->replaceLetters('/ei/', array('yud', 'yud'));
+    $this->replaceLetters('/a[iy]/', 'yud');
+    $this->replaceLetters('/oi/', array('vav', 'yud'));
+    $this->replaceLetters('/[ae]/', array() );
+    $this->replaceLetters('/i/', 'yud');
+    $this->replaceLetters('/[ou]/', 'vav');
     
     // diacriticked consonants
-    $this->replaceLetters('~\{DOTB\}v~', 'vav');
-    $this->replaceLetters('~\{DOTB\}h~', 'het');
-    $this->replaceLetters('~\{DOTB\}t~', 'tet');
-    $this->replaceLetters('~\{DOTB\}k~', 'kuf');
-    $this->replaceLetters('~\{ACUTE\}s~', 'sin');
+    $this->replaceLetters('/\{DOTB\}v/', 'vav');
+    $this->replaceLetters('/\{DOTB\}h/', 'het');
+    $this->replaceLetters('/\{DOTB\}t/', 'tet');
+    $this->replaceLetters('/\{DOTB\}k/', 'kuf');
+    $this->replaceLetters('/\{ACUTE\}s/', 'sin');
     
     // plain consonants
-    $this->replaceLetters('~[bv]~', 'bet');
-    $this->replaceLetters('~\{MLLHRING\}~', 'ayin');
-    $this->replaceLetters('~g~', 'gimel');
-    $this->replaceLetters('~d~', 'dalet');
-    $this->replaceLetters('~h~', 'he');
-    $this->replaceLetters('~z~', 'zayin');
-    $this->replaceLetters('~y~', 'yud');
-    $this->replaceLetters('~k[a]?(?=[^a-z&\{-]|$)~', 'kaf_sofit');
-    $this->replaceLetters('~k~', 'kaf');
-    $this->replaceLetters('~l~', 'lamed');
-    $this->replaceLetters('~m(?=[^a-z&\{-]|$)~', 'mem_sofit');
-    $this->replaceLetters('~m~', 'mem');
-    $this->replaceLetters('~n(?=[^a-z&\{-]|$)~', 'nun_sofit');
-    $this->replaceLetters('~n~', 'nun');
-    $this->replaceLetters('~s~', 'samekh');
-    $this->replaceLetters('~[pf](?=[^a-z&\{-]|$)~', 'pe_sofit');
-    $this->replaceLetters('~[pf]~', 'pe');
-    $this->replaceLetters('~r~', 'resh');
-    $this->replaceLetters('~t~', 'tav');
+    $this->replaceLetters('/[bv]/', 'bet');
+    $this->replaceLetters('/\{MLLHRING\}/', 'ayin');
+    $this->replaceLetters('/g/', 'gimel');
+    $this->replaceLetters('/d/', 'dalet');
+    $this->replaceLetters('/h/', 'he');
+    $this->replaceLetters('/z/', 'zayin');
+    $this->replaceLetters('/y/', 'yud');
+    $this->replaceLetters('/k[a]?(?=[^a-z&\{-]|$)/', 'kaf_sofit');
+    $this->replaceLetters('/k/', 'kaf');
+    $this->replaceLetters('/l/', 'lamed');
+    $this->replaceLetters('/m(?=[^a-z&\{-]|$)/', 'mem_sofit');
+    $this->replaceLetters('/m/', 'mem');
+    $this->replaceLetters('/n(?=[^a-z&\{-]|$)/', 'nun_sofit');
+    $this->replaceLetters('/n/', 'nun');
+    $this->replaceLetters('/s/', 'samekh');
+    $this->replaceLetters('/[pf](?=[^a-z&\{-]|$)/', 'pe_sofit');
+    $this->replaceLetters('/[pf]/', 'pe');
+    $this->replaceLetters('/r/', 'resh');
+    $this->replaceLetters('/t/', 'tav');
     
     // now, clean up:
     
     // remove any remaining diacritics from results (?!)
-    $this->opacText = preg_replace('~\{[A-Z]+\}~', '', $this->opacText);
-    $this->utfText = preg_replace('~\{[A-Z]+\}~', '', $this->utfText);
+    $this->opacText = preg_replace('/\{[A-Z]+\}/', '', $this->opacText);
+    $this->utfText = preg_replace('/\{[A-Z]+\}/', '', $this->utfText);
     
     // wipe prefix hyphens (e.g. ha-Torah)
-    $this->opacText = preg_replace('~(?<=$| )(.{0,10})-~', '$1', $this->opacText);
-    $this->utfText = preg_replace('~(?<=$| )(.{0,14})-~', '$1', $this->utfText);
+    $this->opacText = preg_replace('/(?<=$| )(.{0,10})-/', '$1', $this->opacText);
+    $this->utfText = preg_replace('/(?<=$| )(.{0,14})-/', '$1', $this->utfText);
 
     // back to lowercase for the subfield delimiters and XML entities which remain
     $this->opacText = strtolower($this->opacText);
