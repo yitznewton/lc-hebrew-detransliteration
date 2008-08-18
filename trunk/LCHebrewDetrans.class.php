@@ -182,7 +182,7 @@ class LCHebrewDetrans
     $this->generateWordPatterns();
   }
   
-  public function getOpacCode($letter)
+  private function getOpacCode($letter)
   {
     if (isset($letter, $this->opacCodes)) {
       return $this->opacCodes[$letter];
@@ -191,7 +191,7 @@ class LCHebrewDetrans
     }
   }
 
-  public function getUtfCode($letter)
+  private function getUtfCode($letter)
   {
     if (isset($letter, $this->utfCodes)) {
       return $this->utfCodes[$letter];
