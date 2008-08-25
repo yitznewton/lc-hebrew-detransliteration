@@ -155,7 +155,7 @@ class XMLrecords
 
 function getRecords($filename)
 {
-  $file = fopen($filename, 'rb');
+  $file = fopen($filename, 'rb') or exit('Could not open file.');
   $records = array();
   
   while ($line = fgets($file)) {
@@ -171,6 +171,8 @@ function getRecords($filename)
     $goodFields = array(
       '245',
       '246',
+      '440',
+      '490',
       '700',
       '740'
     );
@@ -307,6 +309,6 @@ function writeOPACfields($filename, $records)
   fclose($fp);
 }
 
-$records = getRecords('./hebrew-2008aug15.mrk');
-writeXMLproof('./results2.xml', $records);
-writeOPACfields('./hebrew_opac2.txt', $records);
+$records = getRecords('./hebrew-2008aug25.mrk');
+writeXMLproof('./results.xml', $records);
+writeOPACfields('./hebrew_opac.txt', $records);
