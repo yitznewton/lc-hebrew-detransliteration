@@ -82,6 +82,8 @@ class LCHebrewDetrans
   );
   
   private $manualWords = array(
+    'hu' =>
+      array('he', 'vav', 'alef'),
     'bet' =>
       array('bet', 'yud', 'tav'),
     'bayit' =>
@@ -132,6 +134,8 @@ class LCHebrewDetrans
       array('resh', 'alef', 'shin'),
     'reshit' =>
       array('resh', 'alef', 'shin', 'yud', 'tav'),
+    'bereshit' =>
+      array('bet', 'resh', 'alef', 'shin', 'yud', 'tav'),
     '\{MLLHRING\}iyun' =>
       array('ayin', 'yud', 'vav', 'nun_sofit'),
     '\{MLLHRING\}iyunim' =>
@@ -171,6 +175,23 @@ class LCHebrewDetrans
   
   public function setText($text)
   {
+    if (
+      stripos($text, ' of ')    !== false ||
+      stripos($text, ' in ')    !== false ||
+      stripos($text, 'the ')    !== false ||
+      stripos($text, 'c')       !== false ||
+      stripos($text, 'j')       !== false ||
+      stripos($text, 'q')       !== false ||
+      stripos($text, 'x')       !== false ||
+      stripos($text, 'w')       !== false ||
+      stripos($text, 'oo')      !== false ||
+      stripos($text, 'ou')      !== false ||
+      stripos($text, '{uml}')   !== false ||
+      stripos($text, '{grave}') !== false
+    ) {
+      throw new Exception('Probably not Hebrew');
+    }
+    
     $this->text = $text;
   }
   
@@ -227,7 +248,7 @@ class LCHebrewDetrans
     foreach ($this->manualWords as $word => $letters) {
       // find words in field matching override words, delimited
       // by space|hyphen|subfield delimiter|^|$
-      $pattern = '(?<=^|[ -]|$.)' . $word . '(?=[^a-z&\{]|$)';
+      $pattern = '(?<=^|[ -]|\|[a-zA-Z]|$.)' . $word . '(?=[^a-z&\{]|$)';
         
       $opac_letters = '';
       $utf_letters = '';
@@ -335,8 +356,8 @@ class LCHebrewDetrans
     $this->utfText = preg_replace('/\{[A-Z]+\}/', '', $this->utfText);
     
     // wipe prefix hyphens (e.g. ha-Torah)
-    $this->opacText = preg_replace('/(?<=$| )(.{0,10})-/', '$1', $this->opacText);
-    $this->utfText = preg_replace('/(?<=$| )(.{0,14})-/', '$1', $this->utfText);
+    $this->opacText = preg_replace('/(?<=^| )(.{0,10})-/', '$1', $this->opacText);
+    $this->utfText = preg_replace('/(?<=^| )(.{0,14})-/', '$1', $this->utfText);
 
     // back to lowercase for the subfield delimiters and XML entities which remain
     $this->opacText = strtolower($this->opacText);

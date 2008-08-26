@@ -72,6 +72,7 @@ class Field
       stripos($content, ' in ')    !== false ||
       stripos($content, 'the ')    !== false ||
       stripos($content, 'c')       !== false ||
+      stripos($content, 'j')       !== false ||
       stripos($content, 'q')       !== false ||
       stripos($content, 'x')       !== false ||
       stripos($content, 'w')       !== false ||
@@ -173,7 +174,6 @@ function getRecords($filename)
       '246',
       '440',
       '490',
-      '700',
       '740'
     );
     
