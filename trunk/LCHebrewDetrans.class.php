@@ -4,13 +4,26 @@
 Copyright (c) 2008, Benjamin Schaffer (a.k.a. Yitzchak Schaffer)
 All rights reserved.
 
-Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
 
-    * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-    * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
-    * The name of Benjamin Schaffer (a.k.a. Yitzchak Schaffer) may be used to endorse or promote products derived from this software without specific prior written permission.
+    * Redistributions of source code must retain the above copyright notice,
+    this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in the
+    documentation and/or other materials provided with the distribution.
 
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
+THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 class LCHebrewDetrans
@@ -84,6 +97,8 @@ class LCHebrewDetrans
   private $manualWords = array(
     'hu' =>
       array('he', 'vav', 'alef'),
+    'ya\{MLLHRING\}a\{DOTB\}kov' =>
+      array('yud', 'ayin', 'kuf', 'bet'),
     'bet' =>
       array('bet', 'yud', 'tav'),
     'bayit' =>
@@ -102,6 +117,8 @@ class LCHebrewDetrans
       array('ayin', 'nun', 'yud', 'nun', 'yud'),
     'tsiyon' =>
       array('tsadi', 'yud', 'vav', 'nun_sofit'),
+    'hekhal' =>
+      array('he', 'yud', 'kaf', 'lamed'),
     'oti' =>
       array('alef', 'vav', 'tav', 'yud'),
     'perush' =>
@@ -176,18 +193,18 @@ class LCHebrewDetrans
   public function setText($text)
   {
     if (
-      stripos($text, ' of ')    !== false ||
-      stripos($text, ' in ')    !== false ||
-      stripos($text, 'the ')    !== false ||
-      stripos($text, 'c')       !== false ||
-      stripos($text, 'j')       !== false ||
-      stripos($text, 'q')       !== false ||
-      stripos($text, 'x')       !== false ||
-      stripos($text, 'w')       !== false ||
-      stripos($text, 'oo')      !== false ||
-      stripos($text, 'ou')      !== false ||
-      stripos($text, '{uml}')   !== false ||
-      stripos($text, '{grave}') !== false
+      strpos($text, ' of ')    !== false ||
+      strpos($text, ' in ')    !== false ||
+      strpos($text, 'the ')    !== false ||
+      strpos($text, 'c')       !== false ||
+      strpos($text, 'j')       !== false ||
+      strpos($text, 'q')       !== false ||
+      strpos($text, 'x')       !== false ||
+      strpos($text, 'w')       !== false ||
+      strpos($text, 'oo')      !== false ||
+      strpos($text, 'ou')      !== false ||
+      strpos($text, '{UML}')   !== false ||
+      strpos($text, '{GRAVE}') !== false
     ) {
       throw new Exception('Probably not Hebrew');
     }
@@ -308,6 +325,8 @@ class LCHebrewDetrans
     $this->replaceLetters('/(?<=^|[ -])[aei]/', 'alef');
     $this->replaceLetters('/(?<=^|[ -])[ou]/', 'vav');
     $this->replaceLetters('/\{MLRHRING\}[ae]/', 'alef');
+    $this->replaceLetters('/\{MLRHRING\}iyi/', array('alef', 'yud', 'yud'));
+    $this->replaceLetters('/\{MLRHRING\}iy/', array('alef', 'yud'));
     $this->replaceLetters('/\{MLRHRING\}i/', array('alef', 'yud'));
     $this->replaceLetters('/\{MLRHRING\}[ou]/', array('alef', 'vav'));
 
