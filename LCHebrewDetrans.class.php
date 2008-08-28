@@ -194,6 +194,7 @@ class LCHebrewDetrans
   {
     // make the subfield delimiters and diacritics
     // uppercase to escape Hebrification
+    $text = strtolower($text);
     $text = preg_replace('/ ?\$([a-z]) ?/e', "'|' . strtoupper('$1')", $text);
     $text = preg_replace('/\{([a-z]+)\}/e', "'{' . strtoupper('$1') . '}'", $text);
     
@@ -288,7 +289,6 @@ class LCHebrewDetrans
   public function convert()
   {
     $text = $this->text;
-    $text = strtolower($text);
     
     // truncate 245$c
     // CHANGED - CHECK TO MAKE SURE IT DOESN'T BREAK!
