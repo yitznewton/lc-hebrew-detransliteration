@@ -193,8 +193,12 @@ function getRecords($filename)
       }
       
       if ($tag == '245') {
+        // scrub subfield 'h'
+        $content = preg_replace('/\$h[^\]]+]/', '', $content);
+
         // only subfields 'a' and 'b'
         $startSubB = strpos($content, '$b');
+        
         if ($startSubB !== false) {
           // there is a subfield b
           $startNextSub = strpos($content, '$', $startSubB + 1);
