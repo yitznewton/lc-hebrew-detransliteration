@@ -181,8 +181,8 @@ class LCHebrewDetrans
 
   
   public function __construct($text = null)
-    {
-      if ($text !== null) {
+  {
+    if ($text !== null) {
       $this->setText($text);
     }
     
@@ -192,6 +192,11 @@ class LCHebrewDetrans
   
   public function setText($text)
   {
+    // make the subfield delimiters and diacritics
+    // uppercase to escape Hebrification
+    $text = preg_replace('/ ?\$([a-z]) ?/e', "'|' . strtoupper('$1')", $text);
+    $text = preg_replace('/\{([a-z]+)\}/e', "'{' . strtoupper('$1') . '}'", $text);
+    
     if (
       strpos($text, ' of ')    !== false ||
       strpos($text, ' in ')    !== false ||
@@ -284,11 +289,6 @@ class LCHebrewDetrans
   {
     $text = $this->text;
     $text = strtolower($text);
-    
-    // make the subfield delimiters and diacritics
-    // uppercase to escape Hebrification
-    $text = preg_replace('/ ?\$([a-z]) ?/e', "'|' . strtoupper('$1')", $text);
-    $text = preg_replace('/\{([a-z]+)\}/e', "'{' . strtoupper('$1') . '}'", $text);
     
     // truncate 245$c
     // CHANGED - CHECK TO MAKE SURE IT DOESN'T BREAK!
