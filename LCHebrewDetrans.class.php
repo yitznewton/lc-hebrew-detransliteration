@@ -101,10 +101,28 @@ class LCHebrewDetrans
       array('yud', 'ayin', 'kuf', 'bet'),
     'bet' =>
       array('bet', 'yud', 'tav'),
+    '\{DOTB\}hokhmah' =>
+      array('het', 'kaf', 'mem', 'he'),
+    '\{DOTB\}hokhmat' =>
+      array('het', 'kaf', 'mem', 'tav'),
+    'yehoshu\{MLLHRING\}' =>
+      array('yud', 'he', 'vav', 'shin', 'ayin'),
     'bayit' =>
       array('bet', 'yud', 'tav'),
+    '\{DOTB\}hayenu' =>
+      array('het', 'yud', 'yud', 'nun', 'vav'),
     'da\{DOTB\}vid' =>
       array('dalet', 'vav', 'dalet'),
+    'ye\{DOTB\}hezkel' =>
+      array('yud', 'het', 'zayin', 'kuf', 'alef', 'lamed'),
+    '\{DOTB\}hel' =>
+      array('het', 'yud', 'lamed'),
+    '\{DOTB\}hayil' =>
+      array('het', 'yud', 'lamed'),
+    'kohen' =>
+      array('kaf', 'he', 'nun_sofit'),
+    'efrayim' =>
+      array('alef', 'pe', 'resh', 'yud', 'mem_sofit'),
     'yerushalayim' =>
       array('yud', 'resh', 'vav', 'shin', 'lamed', 'yud', 'mem_sofit'),
     'yerushala\[y\]im' =>
@@ -125,12 +143,30 @@ class LCHebrewDetrans
       array('pe', 'yud', 'resh', 'vav', 'shin'),
     'or' =>
       array('alef', 'vav', 'resh'),
+    'or\{DOTB\}hot' =>
+      array('alef', 'vav', 'resh', 'het', 'vav', 'tav'),
     'pir\{242\}ke' =>
       array('pe', 'resh', 'kuf', 'yud'),
     'midrash' =>
       array('mem', 'dalet', 'resh', 'shin'),
     'ohel' =>
       array('alef', 'he', 'lamed'),
+    'ohole' =>
+      array('alef', 'he', 'lamed', 'yud'),
+    'shelomoh' =>
+      array('shin', 'lamed', 'mem', 'he'),
+    'binah' =>
+      array('bet', 'yud', 'nun', 'he'),
+    'mayim' =>
+      array('mem', 'yud', 'mem_sofit'),
+    'berur' =>
+      array('bet', 'yud', 'resh', 'vav', 'resh'),
+    'yishma\{MLLHRING\}el' =>
+      array('yud', 'shin', 'mem', 'ayin', 'alef', 'lamed'),
+    'ba\{DOTB\}ya' =>
+      array('bet', 'het', 'yud', 'yud'),
+    'zayit' =>
+      array('zayin', 'yud', 'tav'),
     '\{MLLHRING\}im' =>
       array('ayin', 'mem_sofit'),
     'otsar' =>
@@ -173,6 +209,8 @@ class LCHebrewDetrans
       array('het', 'mem', 'shin', 'yud'),
     'kh?ol' =>
       array('kaf', 'lamed'),
+    'lel' =>
+      array('lamed', 'yud', 'lamed'),
     'be\{MLRHRING\}ur' =>
       array('bet', 'yud', 'alef', 'vav', 'resh')
   );
@@ -230,7 +268,7 @@ class LCHebrewDetrans
   
   private function getOpacCode($letter)
   {
-    if (isset($letter, $this->opacCodes)) {
+    if (isset($this->opacCodes[$letter])) {
       return $this->opacCodes[$letter];
     } else {
       throw new Exception ("Letter '$letter' not in OPAC comparison table.");
@@ -239,7 +277,7 @@ class LCHebrewDetrans
 
   private function getUtfCode($letter)
   {
-    if (isset($letter, $this->utfCodes)) {
+    if (isset($this->utfCodes[$letter])) {
       return $this->utfCodes[$letter];
     } else {
       throw new Exception ("Letter '$letter' not in UTF comparison table.");
@@ -290,9 +328,10 @@ class LCHebrewDetrans
   {
     $text = $this->text;
     
-    // truncate 245$c
+    // truncate 245$c and parallel titles
     // CHANGED - CHECK TO MAKE SURE IT DOESN'T BREAK!
     $text = preg_replace('/ \/.*$/', '', $text);
+    $text = preg_replace('/ =.*$/', '', $text);
     
     $this->opacText = $text;
     $this->utfText = $text;
@@ -323,6 +362,7 @@ class LCHebrewDetrans
     $this->replaceLetters('/(?<=^|[ -])[ae][iy]/', array('alef', 'yud'));
     $this->replaceLetters('/(?<=^|[ -])oi/', array('alef', 'vav', 'yud'));
     $this->replaceLetters('/(?<=^|[ -])[aei]/', 'alef');
+    // why no alef in the following?
     $this->replaceLetters('/(?<=^|[ -])[ou]/', 'vav');
     $this->replaceLetters('/\{MLRHRING\}[ae]/', 'alef');
     $this->replaceLetters('/\{MLRHRING\}iyi/', array('alef', 'yud', 'yud'));
@@ -331,6 +371,7 @@ class LCHebrewDetrans
     $this->replaceLetters('/\{MLRHRING\}[ou]/', array('alef', 'vav'));
 
     // remaining vowels
+    $this->replaceLetters('/iyi/', array('yud', 'yud'));
     $this->replaceLetters('/(?<=^| )yi/', 'yud');
     $this->replaceLetters('/e(?=[^-a-z&\{])/', 'yud');
     $this->replaceLetters('/ei/', array('yud', 'yud'));
