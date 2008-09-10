@@ -107,6 +107,12 @@ class LCHebrewDetrans
       array('het', 'kaf', 'mem', 'tav'),
     'yehoshu\{MLLHRING\}' =>
       array('yud', 'he', 'vav', 'shin', 'ayin'),
+    '\{DOTB\}tohorah' =>
+      array('tet', 'he', 'resh', 'he'),
+    '\{DOTB\}tohorat' =>
+      array('tet', 'he', 'resh', 'tav'),
+    '\{DOTB\}tohorot' =>
+      array('tet', 'he', 'resh', 'vav', 'tav'),
     'bayit' =>
       array('bet', 'yud', 'tav'),
     '\{DOTB\}hayenu' =>
@@ -352,18 +358,18 @@ class LCHebrewDetrans
   
     // single letters that are two in transliterated form
     $this->replaceLetters('/(?<=[^\};])kh[a]?(?=[^a-z&\{-]|$)/', 'kaf_sofit');
-    $this->replaceLetters('/(?<=[^\};])kh/', 'kaf');
+    $this->replaceLetters('/(?<=[^\};]|)kh/', 'kaf');
     $this->replaceLetters('/sh/', 'shin');
     $this->replaceLetters('/(?<=[^\};])ts(?=[^a-z&\{-]|$)/', 'tsadi_sofit');
-    $this->replaceLetters('/(?<=[^\};])ts/', 'tsadi');
+    $this->replaceLetters('/(?<=[^\};]|)ts/', 'tsadi');
 
     // alef
     $this->replaceLetters('/(?<=[^h])a(?=[^a-z&\{-]|$)/', 'alef');
     $this->replaceLetters('/(?<=^|[ -])[ae][iy]/', array('alef', 'yud'));
     $this->replaceLetters('/(?<=^|[ -])oi/', array('alef', 'vav', 'yud'));
     $this->replaceLetters('/(?<=^|[ -])[aei]/', 'alef');
-    // why no alef in the following?
-    $this->replaceLetters('/(?<=^|[ -])[ou]/', 'vav');
+    // why was there originally no alef in the following?
+    $this->replaceLetters('/(?<=^|[ -])[ou]/', array('alef', 'vav'));
     $this->replaceLetters('/\{MLRHRING\}[ae]/', 'alef');
     $this->replaceLetters('/\{MLRHRING\}iyi/', array('alef', 'yud', 'yud'));
     $this->replaceLetters('/\{MLRHRING\}iy/', array('alef', 'yud'));
@@ -372,7 +378,8 @@ class LCHebrewDetrans
 
     // remaining vowels
     $this->replaceLetters('/iyi/', array('yud', 'yud'));
-    $this->replaceLetters('/(?<=^| )yi/', 'yud');
+    // $this->replaceLetters('/(?<=^| )yi/', 'yud');
+    $this->replaceLetters('/yi/', 'yud');
     $this->replaceLetters('/e(?=[^-a-z&\{])/', 'yud');
     $this->replaceLetters('/ei/', array('yud', 'yud'));
     $this->replaceLetters('/a[iy]/', 'yud');
